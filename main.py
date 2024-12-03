@@ -1,21 +1,22 @@
 import sqlite3
 import sys
-from PyQt6 import uic
+from mainui import MainUI
+from formui import FormUI
 from PyQt6.QtWidgets import QApplication
 from PyQt6.QtWidgets import QMainWindow, QTableWidgetItem
 
 
-class DBSample(QMainWindow):
+class DBSample(QMainWindow, MainUI):
     def __init__(self):
         super().__init__()
-        uic.loadUi('main.ui', self)
+        self.setupUi(self)
         self.create_or_edit.clicked.connect(self.add_or_edit)
         self.update_info.clicked.connect(self.select_data)
         # По умолчанию будем выводить все данные из таблицы films
         self.select_data()
 
     def select_data(self):
-        self.connection = sqlite3.connect("coffee.sqlite")
+        self.connection = sqlite3.connect("data/coffee.sqlite")
         # Получим результат запроса,
         # который ввели в текстовое поле
         res = self.connection.cursor().execute("SELECT * FROM coffee").fetchall()
@@ -38,10 +39,10 @@ class DBSample(QMainWindow):
         self.second_form.show()
 
 
-class AddUpdateBtn(QMainWindow):
+class AddUpdateBtn(QMainWindow, FormUI):
     def __init__(self):
         super().__init__()
-        uic.loadUi('addEditCoffeeForm.ui', self)
+        self.setupUi(self)
         self.update_btn.clicked.connect(self.update_bd)
         self.create_btn.clicked.connect(self.create_bd)
 
@@ -52,7 +53,7 @@ class AddUpdateBtn(QMainWindow):
                 self.coffee_grind_edit.text() and self.description_edit.text() and self.price_edit.value() and self.mass_edit.value()):
             self.error_label.setText('Заполните все поля')
             return
-        con = sqlite3.connect('coffee.sqlite')
+        con = sqlite3.connect('data/coffee.sqlite')
         # Выполнение запроса и изменение никнейма и любимого предмета
         con.cursor().execute(f"""UPDATE coffee
                                  SET sort_name = '{self.sortname_edit.text()}',
@@ -74,7 +75,7 @@ class AddUpdateBtn(QMainWindow):
                 and self.mass_create.value()):
             self.error_label.setText('Заполните все поля')
             return
-        con = sqlite3.connect('coffee.sqlite')
+        con = sqlite3.connect('data/coffee.sqlite')
         con.cursor().execute(f"""Insert into coffee(sort_name, roast_level, coffee_grind, description, price, mass)
                                 Values('{self.sortname_create.text()}',
                                         {self.roast_level_create.value()},
