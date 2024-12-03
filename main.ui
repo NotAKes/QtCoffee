@@ -43,6 +43,32 @@
      </rect>
     </property>
    </widget>
+   <widget class="QPushButton" name="create_or_edit">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>510</y>
+      <width>201</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Изменить или создать запись</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="update_info">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>510</y>
+      <width>201</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Обновить данные</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
